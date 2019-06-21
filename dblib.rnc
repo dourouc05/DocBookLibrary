@@ -1,0 +1,223 @@
+default namespace = "http://docbook.org/ns/docbook"
+include "docbookxi.rnc" {
+  db.classsynopsis =
+    element classsynopsis {
+      db.classsynopsis.attlist,
+      db.oo.inlines+,
+      (db.classsynopsisinfo # Existing tag
+       | db.synopsisinfo # New tag, intending to replace the previous one
+       | db.methodsynopsis
+       | db.constructorsynopsis
+       | db.destructorsynopsis
+       | db.fieldsynopsis
+       | db.synopsis)*
+    }
+}
+db.synopsis = db.enumsynopsis | db.typedefsynopsis
+
+db.programmingsynopsis = db.namespacesynopsis | db.macrosynopsis | db.typedefsynopsis | db.enumsynopsis
+start |= db.programmingsynopsis
+db.toplevel.sections |= db.programmingsynopsis
+
+# Generic synopsisinfo. 
+db.synopsisinfo.role.attribute = attribute role { text }
+db.synopsisinfo.attlist =
+  db.synopsisinfo.role.attribute?
+  & db.common.attributes
+  & db.common.linking.attributes
+  & db.verbatim.attributes
+db.synopsisinfo =
+  element synopsisinfo {
+    db.synopsisinfo.attlist, db.verbatim.contentmodel
+  }
+
+# Deal with namespaces. 
+div {
+    ## First the inline elements. 
+    db.programming.inlines |= db.namespace | db.namespacename
+
+    db.namespace.role.attribute = attribute role { text }
+    db.namespace.attlist =
+       db.namespace.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    db.namespace = element namespace { db.namespace.attlist, db.modifier*, db.namespacename, db.modifier* }
+
+    db.namespacename.role.attribute = attribute role { text }
+    db.namespacename.attlist =
+       db.namespacename.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    db.namespacename = element namespacename { db.namespacename.attlist, db._text }
+    
+    ## Then the synopsis.
+    db.synopsis.blocks |= db.namespacesynopsis
+    
+    db.namespacesynopsis.role.attribute = attribute role { text }
+    db.namespacesynopsis.attlist =
+      db.namespacesynopsis.role.attribute?
+      & db.common.attributes
+      & db.common.linking.attributes
+      & db.language.attribute?
+    db.namespacesynopsis = 
+      element namespacesynopsis { 
+        db.namespacesynopsis.attlist,
+        (db.namespace | db.namespacename),
+        db.recursive.blocks.or.sections?, 
+        (db.synopsisinfo
+        | db.classsynopsis
+        | db.funcsynopsis
+        | db.fieldsynopsis
+        | db.typedefsynopsis
+        | db.macrosynopsis
+        | db.enumsynopsis
+        | db.namespacesynopsis)*, 
+        db.recursive.blocks.or.sections?
+      }
+}
+
+# Deal with macros. Adapted from db.funcsynopsis.
+div {
+    ## First the inline elements. 
+    db.programming.inlines |= db.macroname
+        
+    db.macroname.role.attribute = attribute role { text }
+    db.macroname.attlist =
+      db.macroname.role.attribute?
+      & db.common.attributes
+      & db.common.linking.attributes
+    db.macroname =
+      element macroname { db.function.attlist, db._text }
+    
+    ## Then the synopsis.
+    db.synopsis.blocks |= db.macrosynopsis
+    
+    db.macrosynopsis.role.attribute = attribute role { text }
+    db.macrosynopsis.attlist =
+      db.macrosynopsis.role.attribute?
+      & db.common.attributes
+      & db.common.linking.attributes
+      & db.language.attribute?
+    db.macrosynopsis =
+      element macrosynopsis {
+        db.macrosynopsis.attlist,
+        db.macroname,
+        db.synopsisinfo*,
+        db.macroprototype+,
+        db.synopsisinfo*, 
+        db.recursive.blocks.or.sections?
+      }
+     
+    db.macroprototype.role.attribute = attribute role { text }
+    db.macroprototype.attlist =
+      db.macroprototype.role.attribute?
+      & db.common.attributes
+      & db.common.linking.attributes
+    db.macroprototype =
+      element macroprototype {
+        db.macroprototype.attlist,
+        db.modifier*,
+        db.macrodef,
+        (db.void
+         | db.varargs
+         | ((db.paramdef | db.group.paramdef)+, db.varargs?)),
+        db.modifier*
+      }
+      
+      db.macrodef.role.attribute = attribute role { text }
+      db.macrodef.attlist =
+        db.macrodef.role.attribute?
+        & db.common.attributes
+        & db.common.linking.attributes
+      db.macrodef =
+        element macrodef {
+          db.macrodef.attlist, db.type*, db.macroname
+        }
+}
+    
+# Deal with enums. 
+div {
+    ## First the inline elements. 
+    db.programming.inlines |= db.enumname | db.enumvalue | db.enumidentifier
+
+    db.enumname.role.attribute = attribute role { text }
+    db.enumname.attlist =
+       db.enumname.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    db.enumname = element enumname { db.enumname.attlist, db._text }
+    
+    db.enumvalue.role.attribute = attribute role { text }
+    db.enumvalue.attlist =
+       db.enumvalue.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    db.enumvalue = element enumvalue { db.enumvalue.attlist, db._text }
+    
+    db.enumitemdescription.role.attribute = attribute role { text }
+    db.enumitemdescription.attlist =
+       db.enumitemdescription.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    db.enumitemdescription = element enumitemdescription { db.enumitemdescription.attlist, db.all.inlines* }
+    
+    db.enumidentifier.role.attribute = attribute role { text }
+    db.enumidentifier.attlist =
+       db.enumidentifier.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    db.enumidentifier = element enumidentifier { db.enumidentifier.attlist, db._text }
+
+    ## Then the synopsis.
+    db.synopsis.blocks |= db.enumsynopsis
+    
+    db.enumitem.role.attribute = attribute role { text }
+    db.enumitem.attlist =
+       db.enumitem.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    db.enumitem = element enumitem { db.enumvalue.attlist, db.enumidentifier, db.enumvalue? }
+    
+    db.enumitem.ordered.attribute = attribute ordered { text }
+    db.enumsynopsis.attlist = 
+       db.common.attributes
+       & db.common.linking.attributes
+       & db.language.attribute?
+       & db.enumitem.ordered.attribute
+    db.enumsynopsis = 
+      element enumsynopsis {
+        db.enumsynopsis.attlist, 
+        db.enumname?, 
+        db.synopsisinfo*,
+        db.enumitem+, 
+        db.recursive.blocks.or.sections?
+      }
+}
+  
+# Deal with typedefs.
+div {
+    ## First the inline elements. 
+    db.programming.inlines |= db.typedefname
+    
+    db.typedefname.role.attribute = attribute role { text }
+    db.typedefname.attlist =
+       db.typedefname.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    db.typedefname = element typedefname { db.typedefname.attlist, db._text }
+    
+    ## Then the synopsis.
+    db.synopsis.blocks |= db.typedefsynopsis
+    
+    db.typedefsynopsis.attlist = 
+       db.common.attributes
+       & db.common.linking.attributes
+       & db.language.attribute?
+    db.typedefsynopsis = 
+      element typedefsynopsis {
+        db.typedefsynopsis.attlist, 
+        db.typedefname, 
+        db.programming.inlines+, 
+        db.recursive.blocks.or.sections?
+      }
+}
