@@ -1,5 +1,5 @@
 default namespace = "http://docbook.org/ns/docbook"
-include "docbookxi.rnc" {
+include "docbook.rnc" {
   db.classsynopsis =
     element classsynopsis {
       db.classsynopsis.attlist,
@@ -13,7 +13,7 @@ include "docbookxi.rnc" {
        | db.synopsis)*
     }
 }
-db.synopsis = db.enumsynopsis | db.typedefsynopsis
+db.synopsis.blocks |= db.enumsynopsis | db.typedefsynopsis
 
 db.programmingsynopsis = db.namespacesynopsis | db.macrosynopsis | db.typedefsynopsis | db.enumsynopsis
 start |= db.programmingsynopsis
@@ -176,14 +176,14 @@ div {
        db.enumitem.role.attribute?
        & db.common.attributes
        & db.common.linking.attributes
-    db.enumitem = element enumitem { db.enumvalue.attlist, db.enumidentifier, db.enumvalue? }
+    db.enumitem = element enumitem { db.enumvalue.attlist, db.enumidentifier, db.enumvalue?, db.enumitemdescription? }
     
     db.enumitem.ordered.attribute = attribute ordered { text }
     db.enumsynopsis.attlist = 
        db.common.attributes
        & db.common.linking.attributes
        & db.language.attribute?
-       & db.enumitem.ordered.attribute
+       & db.enumitem.ordered.attribute?
     db.enumsynopsis = 
       element enumsynopsis {
         db.enumsynopsis.attlist, 
@@ -217,7 +217,7 @@ div {
       element typedefsynopsis {
         db.typedefsynopsis.attlist, 
         db.typedefname, 
-        db.programming.inlines+, 
+        db.programming.inlines*, 
         db.recursive.blocks.or.sections?
       }
 }

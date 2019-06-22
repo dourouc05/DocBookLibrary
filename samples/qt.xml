@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <db:article xmlns:db="http://docbook.org/ns/docbook"
-            xmlns:xlink="http://www.w3.org/1999/xlink">
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="5.2-extension library">
    <db:info>
       <db:title>Qt</db:title>
       <db:abstract>
@@ -11,8 +12,8 @@
       <db:namespace>
          <db:namespacename>Qt</db:namespacename>
       </db:namespace>
-      <db:namespacesynopsisinfo role="module">QtCore</db:namespacesynopsisinfo>
-      <db:namespacesynopsisinfo role="headers">#include &lt;qnamespace.h&gt;</db:namespacesynopsisinfo>
+      <db:synopsisinfo role="module">QtCore</db:synopsisinfo>
+      <db:synopsisinfo role="headers">#include &lt;qnamespace.h&gt;</db:synopsisinfo>
    </db:namespacesynopsis>
    <db:section xml:id="details">
       <db:title>Detailed Description</db:title>
