@@ -134,6 +134,43 @@ div {
           db.macrodef.attlist, db.type*, db.macroname
         }
 }
+
+# Deal with unions. 
+div {
+    ## First the inline elements. 
+    db.programming.inlines |= db.unionname
+
+    db.unionname.role.attribute = attribute role { text }
+    db.unionname.attlist =
+       db.unionname.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    db.unionname = element unionname { db.unionname.attlist, db._text }
+    
+    ## Then the synopsis.
+    db.union.role.attribute = attribute role { text }
+    db.union.attlist =
+       db.union.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    db.union = element union { db.union.attlist, db.unionname?, db.programming.inlines* }
+    
+    db.synopsis.blocks |= db.unionsynopsis
+    
+    db.unionsynopsis.attlist = 
+       db.common.attributes
+       & db.common.linking.attributes
+       & db.language.attribute?
+       & db.enumitem.ordered.attribute?
+    db.unionsynopsis = 
+      element unionsynopsis {
+        db.unionsynopsis.attlist, 
+        db.unionname?,
+        db.union?, 
+        db.synopsisinfo*,
+        db.recursive.blocks.or.sections?
+      }
+}
     
 # Deal with enums. 
 div {
