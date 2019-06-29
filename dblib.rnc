@@ -10,7 +10,31 @@ include "docbook.rnc" {
        | db.constructorsynopsis
        | db.destructorsynopsis
        | db.fieldsynopsis
-       | db.synopsis)*
+       | db.synopsis)*, 
+      db.recursive.blocks.or.sections?
+    }
+    
+  db.methodparam =
+    element methodparam {
+      db.methodparam.attlist,
+      db.modifier*,
+      db.type?,
+      ((db.modifier*, db.parameter, db.initializer?) | db.funcparams),
+      db.modifier*, 
+      db.para* # Just paragraphs: a parameter should need much more (unlike the method itself). 
+    }
+    
+  db.methodsynopsis =
+    element methodsynopsis {
+      db.methodsynopsis.attlist,
+      db.modifier*,
+      (db.type | db.void)?,
+      db.methodname,
+      ((db.methodparam | db.group.methodparam)+ | db.void),
+      db.exceptionname*,
+      db.modifier*, 
+      db.synopsisinfo*,
+      db.recursive.blocks.or.sections?
     }
 }
 db.synopsis.blocks |= db.enumsynopsis | db.typedefsynopsis
@@ -28,7 +52,8 @@ db.synopsisinfo.attlist =
   & db.verbatim.attributes
 db.synopsisinfo =
   element synopsisinfo {
-    db.synopsisinfo.attlist, db.verbatim.contentmodel
+    db.synopsisinfo.attlist, 
+    (db.verbatim.contentmodel | (db.programming.inlines?, db.para*)) # Either a bit of text (just a file to include) or more involved content model (may include a first tag to bring more information, like the exact exception name plus the context where the exception is thrown/raised). 
   }
 
 # Deal with namespaces. 
