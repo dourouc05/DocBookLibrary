@@ -4,7 +4,7 @@ include "docbook.rnc" {
     element classsynopsis {
       db.classsynopsis.attlist,
       db.template*, # As in C++. 
-      db.oo.inlines+, # Just db.classname to be consistent, but that would not be compatible with existing DocBook 5. 
+      (db.oo.inlines | db.classname)+, # Just db.classname to be consistent, but that would not be compatible with existing DocBook 5. 
       db.template*, # As in Java, Julia.
       (db.classsynopsisinfo # Existing tag
        | db.synopsisinfo # New tag, intending to replace the previous one
