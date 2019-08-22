@@ -106,10 +106,14 @@ div {
     db.templateid = element templateid { db.templateid.attlist, db._text }
 
     ## Then the actual template definitions.
-    db.template = element template {
-      (db.modifier | db.type | db._text)*,
-      db.templateid,
+    db.specializedtemplate = element specializedtemplate {
       (db.modifier | db.type | db._text)*
+    }
+    
+    db.template = element template {
+      ((db.modifier | db.type | db._text)*,
+      db.templateid,
+      (db.modifier | db.type | db._text)*) | db.specializedtemplate
     }
 }
 
