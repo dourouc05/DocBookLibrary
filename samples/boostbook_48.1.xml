@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- https://www.boost.org/doc/libs/1_71_0/doc/html/boostbook/documenting.html, example 48.1 -->
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.2-extension library" xml:id="any">
+    <db:info>
+        <db:title>Any</db:title>
+        <db:author>
+            <db:personname>
+                <db:firstname>Kevlin</db:firstname>
+                <db:surname>Henney</db:surname>
+            </db:personname>
+        </db:author>
+        <db:abstract>
+            <db:formalpara>
+                <db:title>Purpose</db:title>
+                <db:para>Safe, generic container for single values of different value types</db:para>
+            </db:formalpara>
+        </db:abstract>
+    </db:info>
+    <db:para>Description of the library (not in the example, but needed to have a valid DocBook document).</db:para>
+</db:article>
