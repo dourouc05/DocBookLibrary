@@ -78,7 +78,6 @@ db.synopsis.blocks |= db.enumsynopsis | db.typedefsynopsis
 
 db.programmingsynopsis = db.namespacesynopsis | db.macrosynopsis | db.typedefsynopsis | db.enumsynopsis
 start |= db.programmingsynopsis
-db.toplevel.sections |= db.programmingsynopsis
 
 # Generic synopsisinfo. 
 db.synopsisinfo.role.attribute = attribute role { text }
