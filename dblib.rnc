@@ -67,6 +67,12 @@ include "docbook.rnc" {
       db.varname,
       db.initializer?
     }
+    
+  db.type =
+    element type { 
+      db.type.attlist, 
+      (db._text | db.templateid | db.programming.inlines)* 
+    }
 }
 db.synopsis.blocks |= db.enumsynopsis | db.typedefsynopsis
 
@@ -88,7 +94,6 @@ db.synopsisinfo =
   }
   
 # Deal with generics.
-# TODO: funcdef.
 div {
     ## First the inline elements. 
     db.programming.inlines |= db.templateid
