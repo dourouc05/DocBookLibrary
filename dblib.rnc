@@ -65,6 +65,7 @@ include "docbook.rnc" {
       db.modifier*,
       (db.type | db.templateid)?,
       db.varname,
+      db.modifier*,
       db.initializer?
     }
     
