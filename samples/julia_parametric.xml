@@ -23,6 +23,14 @@
         
         <db:para>Class Point.</db:para>
     </db:classsynopsis>
+    <!-- Corresponding Julia syntax: -->
+    <!--
+        struct Point{T}
+            x::T
+            y::T
+        end
+    -->
+    <!-- :: denotes the type. -->
     
     <db:classsynopsis>
         <db:classname>Point</db:classname>
@@ -42,6 +50,13 @@
         
         <db:para>Specialized class Point.</db:para>
     </db:classsynopsis>
+    <!-- Corresponding Julia pseudo-syntax (not allowed in the language, just to show how it could work e.g. in C++): -->
+    <!-- 
+        struct Point{Float64}
+            x::Float64
+            y::Float64
+        end
+    -->
     
     <db:methodsynopsis>
         <db:methodname>translate_point</db:methodname>
@@ -55,4 +70,26 @@
             where <db:templateid>T</db:templateid>
         </db:template>
     </db:methodsynopsis>
+    <!-- Corresponding Julia syntax: -->
+    <!--
+        function translate_point(p::Point{T}) where T
+            … # Code to be documented
+        end
+    -->
+    
+    <db:methodsynopsis>
+        <db:methodname>translate_point</db:methodname>
+        <db:methodparam>
+            <db:type>
+                <db:classname>Point</db:classname>{<db:specializedtemplate>Float64</db:specializedtemplate>}
+            </db:type>
+            <db:parameter>p</db:parameter>
+        </db:methodparam>
+    </db:methodsynopsis>
+    <!-- Corresponding Julia syntax: -->
+    <!--
+        function translate_point(p::Point{Float64})
+            … # Code to be documented
+        end
+    -->
 </db:article>

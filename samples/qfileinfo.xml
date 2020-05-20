@@ -16,6 +16,7 @@
       <db:ooclass>
          <db:classname>QFileInfo</db:classname>
       </db:ooclass>
+      <!-- Roles should be defined by the implementation, i.e. not normalised. -->
       <db:synopsisinfo role="threadsafety">reentrant</db:synopsisinfo>
       <db:synopsisinfo role="module">QtCore</db:synopsisinfo>
       <db:synopsisinfo role="headers">#include &lt;qfileinfo.h&gt;</db:synopsisinfo>
@@ -32,8 +33,8 @@
          <db:title>typedef QFileInfoList</db:title>
          <db:typedefsynopsis>
             <db:typedefname>QFileInfoList</db:typedefname>
+            <db:para>Synonym for <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;<db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code>&gt;.</db:para>
          </db:typedefsynopsis>
-         <db:para>Synonym for <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;<db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code>&gt;.</db:para>
       </db:section>
    </db:section>
 </db:article>

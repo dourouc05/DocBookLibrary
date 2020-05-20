@@ -56,30 +56,6 @@
                <db:enumidentifier>AlignHorizontal_Mask</db:enumidentifier>
                <db:enumvalue>AlignLeft | AlignRight | AlignHCenter | AlignJustify | AlignAbsolute</db:enumvalue>
             </db:enumitem>
-            <db:enumitem>
-               <db:enumidentifier>AlignTop</db:enumidentifier>
-               <db:enumvalue>0x0020</db:enumvalue>
-            </db:enumitem>
-            <db:enumitem>
-               <db:enumidentifier>AlignBottom</db:enumidentifier>
-               <db:enumvalue>0x0040</db:enumvalue>
-            </db:enumitem>
-            <db:enumitem>
-               <db:enumidentifier>AlignVCenter</db:enumidentifier>
-               <db:enumvalue>0x0080</db:enumvalue>
-            </db:enumitem>
-            <db:enumitem>
-               <db:enumidentifier>AlignBaseline</db:enumidentifier>
-               <db:enumvalue>0x0100</db:enumvalue>
-            </db:enumitem>
-            <db:enumitem>
-               <db:enumidentifier>AlignVertical_Mask</db:enumidentifier>
-               <db:enumvalue>AlignTop | AlignBottom | AlignVCenter | AlignBaseline</db:enumvalue>
-            </db:enumitem>
-            <db:enumitem>
-               <db:enumidentifier>AlignCenter</db:enumidentifier>
-               <db:enumvalue>AlignVCenter | AlignHCenter</db:enumvalue>
-            </db:enumitem>
          </db:enumsynopsis>
          <db:typedefsynopsis>
             <db:typedefname>Qt::Alignment</db:typedefname>
